@@ -1,1 +1,221 @@
+# Tic tac toe game code
+# 2 player game
+# Can quit anytime
 
+# Importing the turtle library
+import sys
+import turtle
+
+# Tracking score 
+playerX = 0
+playerO = 0
+
+# Lists that store the moves of each player
+listX = []
+listO = []
+listZ = []
+input_list = ["A1", "A2", "A3", "B1", "B2", "B3","C1", "C2", "C3", "Q"]
+
+# Fullscreen the canvas
+screen = turtle.Screen()
+screen.title("Tic Tac Toe")
+screen.setup(1.0, 1.0)
+
+# Setting up to draw
+t = turtle.Turtle()
+t.hideturtle()
+t.width(4)
+t.color("blue")
+t.penup()
+t.goto(-100,-100)
+ 
+wn = turtle.Screen()
+wn.tracer(0)
+
+# Board
+for _i in range(4):
+  t.pendown()
+  t.forward(200)
+  t.left(90)
+ 
+# Horizontal lines
+t.penup()
+t.goto(-100,-35)
+t.pendown()
+t.forward(200)
+ 
+# Top horizontal line
+t.penup()
+t.goto(-100, 35)
+t.pendown()
+t.forward(200)
+ 
+# Vertical lines
+t.penup()
+t.goto(-35,-100)
+t.pendown()
+t.left(90)
+t.forward(200)
+
+# Left vertical line
+t.penup()
+t.goto(35,-100)
+t.pendown()
+t.forward(200)
+wn.tracer(1)
+
+# Draws Letter A
+t.penup()
+t.goto(-80,-150)
+t.pendown()
+t.write("A", font=("Arial", 30, "normal"))
+ 
+# Draws Letter B
+t.penup()
+t.goto(-10,-150)
+t.pendown()
+t.write("B", font=("Arial", 30, "normal"))
+  
+# Draws Letter C
+t.penup()
+t.goto(60,-150)
+t.pendown()
+t.write("C", font=("Arial", 30, "normal"))
+
+# Draws Number 3
+t.penup()
+t.goto(-130,40)
+t.pendown()
+t.write("3", font=("Arial", 30, "normal"))
+
+91   # Draws Number 2
+ 92   t.penup()
+ 93   t.goto(-130,-30)
+ 94   t.pendown()
+ 95   t.write("2", font=("Arial", 30, "normal"))
+ 96   
+97   # Draws Number 1
+ 98   t.penup()
+ 99   t.goto(-130,-100)
+ 100   t.pendown()
+ 101   t.write("1", font=("Arial", 30, "normal"))
+ 102   
+103   # Create dictionary with coordinates to draw X and O in the square
+ 104   coordinates = {
+ 105   'A1': (-100,-100),
+ 106   'A2': (-100,-35),
+ 107   'A3': (-100, 35),
+ 108   'B1': (-35,-100),
+ 109   'B2': (-35,-35),
+ 110   'B3': (-35, 35),
+ 111   'C1': (35,-100),
+ 112   'C2': (35,-35),
+ 113   'C3': (35, 35)
+ 114   }
+ 115   
+116   # Drawing X
+ 117   def draw_X(x, y):
+ 118   t.penup()
+ 119   t.goto(x+7,y-14)
+ 120   t.pendown()
+ 121   t.write("X", font=("Arial", 60, "normal"))
+ 122   
+123   # Draw O
+ 124   def draw_O(x, y):
+ 125   t.penup()
+ 126   t.goto(x+5,y-16)
+ 127   t.pendown()
+ 128   t.write("O", font=("Arial", 60, "normal"))
+ 129   
+130   # Initiates the game
+ 131   def refresh_board():
+ 132   turn = input("Select 'X' or 'O' to play Tic Tac Toe ('Q' to quit): ")
+ 133   if (turn == 'Q'):
+ 134   quit_game()
+135   if (turn == 'X' or turn == 'O'):
+ 136   return turn
+ 137   else:
+ 138   print("Invalid input. Please enter 'X', 'O', or 'Q'.")
+ 139   refresh_board()
+ 140   
+141   # Check if square is not empty
+ 142   def check_overlap(user_input):
+ 143   if user_input in listZ:
+ 144   print("Block not available, try again")
+ 145   return False
+ 146   else:
+ 147   return True
+ 148   
+149   # Get user input and draw X or O
+ 150   def user_location(choice,user_input):
+ 151   if(check_overlap(user_input)):
+ 152   user_coordinate = coordinates[user_input]
+ 153   if choice == "X":
+ 154   draw_X(user_coordinate[0], user_coordinate[1])
+ 155   listX.append(user_input)
+ 156   listZ.append(user_input)
+ 157   check_win("X",listX)
+ 158   check_draw()
+ 159   else:
+ 160   draw_O(user_coordinate[0], user_coordinate[1])
+ 161   listO.append(user_input)
+ 162   listZ.append(user_input)
+ 163   check_win("O", listO)
+ 164   check_draw()
+ 165   return True
+ 166   else:
+ 167   return False
+ 168   
+169   # Check for tie
+ 170   def check_draw():
+ 171   if (len(listZ) == 9):
+ 172   print("Game ended in draw")
+ 173   quit_game()
+ 174   
+175   # Win function
+ 176   def check_win(player,winlist):
+ 177   global playerX, playerO
+ 178   if (("A1" in winlist and "A2" in winlist and "A3" in winlist) or
+ 179   ("B1" in winlist and "B2" in winlist and "B3" in winlist) or
+ 180   ("C1" in winlist and "C2" in winlist and "C3" in winlist) or
+ 181   ("A1" in winlist and "B1" in winlist and "C1" in winlist) or
+ 182   ("A2" in winlist and "B2" in winlist and "C2" in winlist) or
+ 183   ("A3" in winlist and "B3" in winlist and "C3" in winlist) or
+ 184   ("A1" in winlist and "B2" in winlist and "C3" in winlist) or
+ 185   ("C1" in winlist and "B2" in winlist and "A3" in winlist)):
+ 186   print("Player ", player, " won.")
+ 187   if (player == "X"):
+ 188   playerX+=1
+ 189   quit_game()
+ 190   else:
+ 191   playerO+=1
+ 192   quit_game()
+ 193   
+194   # Display score before quitting game
+ 195   def quit_game():
+ 196   print("Thanks for playing!")
+ 197   print("playerX won: ",playerX)
+ 198   print("playerO won: ",playerO)
+ 199   input("Press Enter to exit ")
+ 200   sys.exit()
+ 201   
+202   # Main function where it calls other functions and user will input their moves
+ 203   choice=refresh_board()
+ 204   turn=choice
+ 205   # Iteration until end of the game
+ 206   while True:
+ 207   print("It's", turn, "turn")
+ 208   user_input = input("Enter a location: ")
+ 209   if(user_input == 'Q'):
+ 210   quit_game()
+ 211   if (user_input not in input_list):
+ 212   print("Invalid input. Please enter 'A1', 'A2', 'A3', 'B1', 'B2', 'B3',\
+ 213    'C1', 'C2', 'C3', or 'Q'")
+ 214   continue
+ 215   # Selection based on results that returns true or false
+ 216   # If true, switch turns and continue game 
+if(user_location(turn,user_input)):
+if turn == "X":
+  turn = "O"
+elif turn == "O":
+  turn = "X"
