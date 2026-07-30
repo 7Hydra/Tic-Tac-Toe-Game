@@ -88,32 +88,31 @@ t.goto(-130,40)
 t.pendown()
 t.write("3", font=("Arial", 30, "normal"))
 
-91   # Draws Number 2
- 92   t.penup()
- 93   t.goto(-130,-30)
- 94   t.pendown()
- 95   t.write("2", font=("Arial", 30, "normal"))
- 96   
-97   # Draws Number 1
- 98   t.penup()
- 99   t.goto(-130,-100)
- 100   t.pendown()
- 101   t.write("1", font=("Arial", 30, "normal"))
- 102   
-103   # Create dictionary with coordinates to draw X and O in the square
- 104   coordinates = {
- 105   'A1': (-100,-100),
- 106   'A2': (-100,-35),
- 107   'A3': (-100, 35),
- 108   'B1': (-35,-100),
- 109   'B2': (-35,-35),
- 110   'B3': (-35, 35),
- 111   'C1': (35,-100),
- 112   'C2': (35,-35),
- 113   'C3': (35, 35)
- 114   }
- 115   
-116   # Drawing X
+# Draws Number 2
+t.penup()
+t.goto(-130,-30)
+t.pendown()
+t.write("2", font=("Arial", 30, "normal"))
+
+# Draws Number 1
+t.penup()
+t.goto(-130,-100)
+t.pendown()
+t.write("1", font=("Arial", 30, "normal"))
+
+# Create dictionary with coordinates to draw X and O in the square
+coordinates = {
+'A1': (-100,-100),
+'A2': (-100,-35),
+'A3': (-100, 35),
+'B1': (-35,-100),
+'B2': (-35,-35),
+'B3': (-35, 35),
+'C1': (35,-100),
+'C2': (35,-35),
+'C3': (35, 35)
+}
+# Drawing X
  117   def draw_X(x, y):
  118   t.penup()
  119   t.goto(x+7,y-14)
